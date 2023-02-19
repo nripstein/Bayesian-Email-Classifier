@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import os
 import string
 from typing import Union, Callable
 
@@ -14,6 +13,7 @@ tqdm.pandas()
 
 # todo
 # make posterior function better so it can better account for words it gets
+# test
 
 
 def timer(func: Callable) -> Callable:
@@ -301,13 +301,13 @@ if __name__ == '__main__':
     # training_df = with_word_set.sample(frac=0.9, random_state=1)
     # testing_df = with_word_set.drop(with_word_set.index)
 
-    freq2 = fileIO.load_freq()
+    word_freq = fileIO.load_freq()
     # freq2 = train_n_rows(df2, num_rows=15000)
     # fileIO.save_freq(freq2)
 
-    tester = with_word_set.tail(1000)
+    tester = with_word_set.tail(100)
 
-    classified = posterior_col(tester, freq2)
+    classified = posterior_col(tester, word_freq)
     # comparison = compare_score(classified)
     print(classified["correct?"].value_counts()[True] / (
                 classified["correct?"].value_counts()[False] + classified["correct?"].value_counts()[True]))
@@ -322,3 +322,17 @@ if __name__ == '__main__':
 
     # print(wrong_only[wrong_only["error_type"] != "Correct Answer"])
 
+    ex = "Dear customer,\n\n" \
+             "We have a special offer just for you! Buy Viagra online now and get 50% off your first purchase. Our Viagra pills are high quality and guaranteed to work.\n" \
+             "Don't let ED ruin your sex life. With our Viagra, you'll be able to perform like never before. Order now and experience the benefits for yourself.\n\n" \
+             "Sincerely,\n\n" \
+             "Viagra Sales Team. $100 off!"
+
+
+    print("-----")
+    import input_one_email
+    g = input_one_email.colour_email(ex, word_freq)
+    print(g)
+    print("--")
+
+    print(input_one_email.colour_extremity())
