@@ -51,7 +51,7 @@ Posteriors:
 
 $$ P(H1|D) = \frac{P(D|H1)P(H1)}{P(D|H1)P(H1) + P(D|H2)P(H2)} $$
 
-$$ P(\textrm{spam}|(\textrm{words}) = \frac{P(\textrm{words}|\textrm{spam})P(\textrm{spam})}{P(\textrm{words}|\textrm{spam})P(\textrm{spam}) + P(\textrm{words}|\textrm{ham})P(\textrm{ham})} $$
+$$ P(\textrm{spam}|\textrm{words}) = \frac{P(\textrm{words}|\textrm{spam})P(\textrm{spam})}{P(\textrm{words}|\textrm{spam})P(\textrm{spam}) + P(\textrm{words}|\textrm{ham})P(\textrm{ham})} $$
 
 Deviations from standard procedure:
 -	If, when doing a likelihood calculstion, a word appears in “spam” but not "ham," then it is treated as if it's been in ham 0.5 times.
