@@ -11,7 +11,7 @@ $$-->
 - [How to Use](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#mathematical-steps)
 - [Mathematical Steps](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#mathematical-steps)
 - [Have an Email? Check if it's Spam](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#have-an-email-check-if-its-spam)
-- [Classifier Accuracy Analysis](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#accuracy-analysis)
+- [Classifier Accuracy Analysis and Visualizations](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#accuracy-analysis)
 - [Future Directions](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#future-directions)
 
 ## TLDR
@@ -57,14 +57,22 @@ Deviations from standard procedure:
 -	If, when doing a likelihood calculstion, a word appears in “spam” but not "ham," then it is treated as if it's been in ham 0.5 times.
 -	If a word appears in "ham" but not "spam," then it is treated as if it has appeared 0.01 tines
 
+The posterior probability of each email being spam is computed.  If it's determined that there's a greater than 97.5% probability of the email being spam, then it is classified as spam
+
 
 ## Have an Email? Check if it's Spam
+This section is incomplete.  Features coming soon
+- I will impliment a feature where you can paste an email into a txt file and the program will tell you the probability that it is spam, and print out the words colour coded according to a heatmap for how likely it is to be spam
+
+## Classifier Accuracy Analysis and Visualizations
 This section is incomplete
 
-## Classifier Accuracy Analysis
-This section is incomplete
+I intend to show:
+- confusion matrix
+
 
 ## Future Directions
 This section is incomplete
+- If an email is one long word, my algorithm doesn't really know how to treat it. I'd like to do something about that
 
 ![image](https://user-images.githubusercontent.com/98430636/219830713-955e4862-a03e-414b-a746-72d83dea6699.png)
