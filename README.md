@@ -11,7 +11,7 @@ $$-->
 - [How to Use](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#mathematical-steps)
 - [Mathematical Steps](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#mathematical-steps)
 - [Have an Email? Check if it's Spam](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#have-an-email-check-if-its-spam)
-- [Classifier Accuracy Analysis and Visualizations](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#accuracy-analysis)
+- [Classifier Accuracy Analysis and Visualizations](https://github.com/nripstein/Bayesian-Email-Classifier/edit/main/README.md#classifier-accuracy-analysis-and-visualizations)
 - [Future Directions](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#future-directions)
 
 ## TLDR
