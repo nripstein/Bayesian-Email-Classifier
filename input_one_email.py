@@ -6,7 +6,18 @@ import pandas as pd
 
 # todo
 # comment colour_email() better, make docstring
-# make docstring for colour_extremity()
+# make docstring for colour_extremity().
+# Make colour_extremity() have ham and spam labels above them in the gradient colours
+
+
+def full_analysis_1_email(email: str, freq: pd.DataFrame, posterior_spam: float) -> str:
+    output = f"There is a {round(posterior_spam * 100, 2)}% chance that this email is spam.\n" \
+             f"Below is a colour-coded printout of the email according to the legend:\n"
+
+    output += colour_extremity() + "\n"
+    output += colour_email(email, freq)
+    return output
+
 
 def colour_email(email: str, freq: pd.DataFrame) -> str:
     # Split the email string into lines using the newline character as the delimiter
@@ -58,24 +69,40 @@ def colour_email(email: str, freq: pd.DataFrame) -> str:
     return formatted_email + "\033[0m"
 
 
-def colour_extremity(label: bool = True, length: int = 50) -> str:
+def colour_extremity(label: bool = True, length: int = 70) -> str:
     if not label:
         output = ""
     else:
         output = "Ham" + " "*(length - len("spam") - len("ham")) + "Spam" + "\n"
-
+    # output = ""
     # Define the color map
     cmap = plt.cm.get_cmap("RdYlBu_r")
 
     # Calculate the color at each block
-    colors = [cmap(x) for x in np.linspace(0, 1, length)]
-
+    colours = [cmap(x) for x in np.linspace(0, 1, length)]
     # Display the color blocks
-    for color in colors:
+    for colour in colours:
         # print([int(x * 255) for x in color])
-        r, g, b = [int(x * 255) for x in color][:-1]
+        r, g, b = [int(x * 255) for x in colour][:-1]
         color_code = f"\033[38;2;{r};{g};{b}m"
         output += color_code + "█" + "\033[0m"
         # print(color_code + "█" + "\033[0m", end="")
+    # legend = output + "\033[0m"
+
+    # z = ""
+    # h = "ham"
+    # for i, char in enumerate(h):
+    #     color = colours[i % len(colours)]
+    #     r, g, b = [int(x * 255) for x in color][:-1]
+    #     color_code = f"\033[38;2;{r};{g};{b}m"
+    #     print(color_code + "char" + "\033[0m", end="")
+    # preface = "Ham" + " " * (length - len("spam") - len("ham")) + "Spam"
+    # color_string = ""
+    # for i, char in enumerate(preface):
+    #     color_code = "\033[38;2;{};{};{}m".format(*colours[i])
+    #     color_string += color_code + char
+    # print(color_string)
+    # print("--")
+    # return preface + "\033[0m" + "\n" + legend
     return output + "\033[0m"
 

@@ -290,6 +290,7 @@ def add_word_set_col(full_df: pd.DataFrame, body_col_name: str = "Body") -> pd.D
 
 
 if __name__ == '__main__':
+
     # corpus = fileIO.load_emails()
     # fileIO.save_formatted_raw_emails(corpus)
     corpus = fileIO.load_emails(file_handle="formatted_corpus", file_extension="pickle", reformat=False)
@@ -305,34 +306,54 @@ if __name__ == '__main__':
     # freq2 = train_n_rows(df2, num_rows=15000)
     # fileIO.save_freq(freq2)
 
-    tester = with_word_set.tail(100)
+    tester = with_word_set.tail(20)
 
     classified = posterior_col(tester, word_freq)
     # comparison = compare_score(classified)
     print(classified["correct?"].value_counts()[True] / (
                 classified["correct?"].value_counts()[False] + classified["correct?"].value_counts()[True]))
-    print(classified.columns)
-    print()
+    # print(classified.columns)
 
     full, wrong_only = accuracy_analysis.error_type_row(classified)
     print(type(wrong_only))
 
-    print(wrong_only.loc[:, ["error_type", "P(spam)"]])
-    print(wrong_only.groupby("error_type").size())
+    # print(wrong_only.loc[:, ["error_type", "P(spam)"]])
+    # print(wrong_only.groupby("error_type").size())
 
     # print(wrong_only[wrong_only["error_type"] != "Correct Answer"])
 
-    ex = "Dear customer,\n\n" \
-             "We have a special offer just for you! Buy Viagra online now and get 50% off your first purchase. Our Viagra pills are high quality and guaranteed to work.\n" \
-             "Don't let ED ruin your sex life. With our Viagra, you'll be able to perform like never before. Order now and experience the benefits for yourself.\n\n" \
-             "Sincerely,\n\n" \
-             "Viagra Sales Team. $100 off!"
+    # import input_one_email
+    #
+    # ex1 = "Dear customer,\n\n" \
+    #      "We have a special offer just for you! Buy Viagra online now and get 50% off your first purchase. Our Viagra pills are high quality and guaranteed to work.\n" \
+    #      "Don't let ED ruin your sex life. With our Viagra, you'll be able to perform like never before. Order now and experience the benefits for yourself.\n\n" \
+    #      "Sincerely,\n\n" \
+    #      "Viagra Sales Team. $100 off!"
+    #
+    # p_ex1 = one_posterior(word_set=string_to_word_set(ex1), freq=word_freq)[0]
+    # print(input_one_email.full_analysis_1_email(email=ex1, freq=word_freq, posterior_spam=p_ex1))
+    #
+    # ex2 = "Dear valued customer,\n\n" \
+    #        "Congratulations! You've been selected to receive a special offer for a limited time only. Act now and you can get a free trial of our exclusive product.\n" \
+    #        "That's right, absolutely free! You don't want to miss out on this amazing opportunity.\n" \
+    #        "Our product is guaranteed to improve your life and make you feel like a new person. So why wait?\n" \
+    #        "Sign up now and claim your free trial today.\n\nSincerely,\nThe Free Product Team"
+    # p_ex2 = one_posterior(word_set=string_to_word_set(ex2), freq=word_freq)[0]
+    # print(input_one_email.full_analysis_1_email(email=ex2, freq=word_freq, posterior_spam=p_ex2))
+    #
+    # print("----")
+    #
+    # ex3 = "Dear Mary,\n\nI hope this email finds you well. I wanted to let you know that I've received the document you sent me and everything looks good.\n" \
+    #       "I'll review it more thoroughly and get back to you soon with any feedback I have.\n\nTake care,\nJane"
+    # p_ex3 = one_posterior(word_set=string_to_word_set(ex3), freq=word_freq)[0]
+    # print(input_one_email.full_analysis_1_email(email=ex3, freq=word_freq, posterior_spam=p_ex3))
 
+    # end input one email stuff
 
-    print("-----")
-    import input_one_email
-    g = input_one_email.colour_email(ex, word_freq)
-    print(g)
-    print("--")
+    # start word cloud stuff
+    # import word_cloud
+    # word_cloud.generate_wordclouds(word_freq)
+    # word_cloud.spam_ratio(word_freq)
 
-    print(input_one_email.colour_extremity())
+    # end word cloud stuff
+

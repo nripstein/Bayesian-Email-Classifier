@@ -1,10 +1,10 @@
 import pandas as pd
 import os
 
-from misc import timer
+from main import timer
 
 # dataset from
-# https://www.kaggle.com/datasets/imdeepmind/preprocessed-trec-2007-public-corpus-dataset?resource=download
+# https://www.kaggle.com/datasets/imdeepmind/preprocessed-trec-2007-public-corpus-dataset
 
 
 @timer
