@@ -69,6 +69,7 @@ This section is incomplete
 
 I intend to show:
 - confusion matrix
+- ratio wordclouds
 
 
 ## Future Directions
