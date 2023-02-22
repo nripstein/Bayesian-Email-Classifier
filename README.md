@@ -57,7 +57,7 @@ Deviations from standard procedure:
 -	If, when doing a likelihood calculstion, a word appears in “spam” but not "ham," then it is treated as if it's been in ham 0.5 times.
 -	If a word appears in "ham" but not "spam," then it is treated as if it has appeared 0.01 tines
 
-The posterior probability of each email being spam is computed.  If it's determined that there's a greater than 97.5% probability of the email being spam, then it is classified as spam
+The posterior probability of each email being spam is computed.  If it's determined that there's a greater than 90% probability of the email being spam, then it is classified as spam
 
 
 ## Have an Email? Check if it's Spam
