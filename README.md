@@ -73,12 +73,17 @@ It is important to remember that the model was trained on a specific dataset, an
 
 Examples:
 
-<img width="1193" alt="Spam Colour Email Example" src="https://user-images.githubusercontent.com/98430636/220826883-b6ffc540-60f0-4153-9acd-1a617d8426b5.png">
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/98430636/220826883-b6ffc540-60f0-4153-9acd-1a617d8426b5.png" alt="spam" width="90%">
+</p>
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/98430636/220826890-44fc7199-8d15-4b77-93d0-d55be015752c.png" alt="ham" width="90%">
+</p>
 
-<img width="965" alt="Ham Colour Email Example" src="https://user-images.githubusercontent.com/98430636/220826890-44fc7199-8d15-4b77-93d0-d55be015752c.png">
-
-<img width="1072" alt="Probably Spam Colour Example" src="https://user-images.githubusercontent.com/98430636/220827124-0b710823-ec55-441d-acaa-142dca24c2a8.png">
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/98430636/220827124-0b710823-ec55-441d-acaa-142dca24c2a8.png" alt="prob spam" width="90%">
+</p>
 
 
 
@@ -87,7 +92,10 @@ To evaluate the performance of the Naive Bayes spam email classifier, I trained 
 
 
 ### Confusion Matrix
-<img src="https://user-images.githubusercontent.com/98430636/220796903-e92a632e-a977-4ffc-bb74-c94f31e747b9.png" alt="confusion matrix" width="70%">
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/98430636/220796903-e92a632e-a977-4ffc-bb74-c94f31e747b9.png" alt="confusion matrix" width="70%">
+</p>
 
 The data from this confusion matrix can be used to determine the <u>sensitivity</u> and <u>specificity</u> of my algorithm. Sensitivity and specificity are two important measures used to evaluate the performance of a binary classification algorithm. Sensitivity measures the proportion of true positive cases that are correctly identified as positive, while specificity measures the proportion of true negative cases that are correctly identified as negative.
 
@@ -97,7 +105,10 @@ To visualize the probability distribution of sensitivity and specificity, I gene
 
 ### Sensitivity and Specificity Probability Distribution Functions
 
-<img src="https://user-images.githubusercontent.com/98430636/220823189-c3b80c9c-7446-4e80-869a-e4e4e4fdee02.png" alt="sens, spec" width="70%">
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/98430636/220942351-de3ad74b-f338-4678-bacd-544e209d9e61.png" alt="sens, spec" width="70%">
+</p>
+
 
 
 As you can see, the probability distribution function for sensitivity is extremley tightly distributed near 100%. This indicates that the model is very good at identifying non-spam emails, with a very low false positive rate. On the other hand, the specificity pdf shows a wider distribution with a lower mode, indicating that the model is not as good at identifying spam emails, and the degree of certainty in the sensitivity it lower. However, the 95% confidence interval for sensitivity still shows a relatively high accuracy rate, ranging from 84.3% to 87.9%. I would ideally like to improve the model so that the lower end of the sensitivity 95% confidence interval is at least 90%.
