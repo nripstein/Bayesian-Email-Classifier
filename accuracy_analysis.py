@@ -20,14 +20,14 @@ def error_type_row(trained: pd.DataFrame, my_label: str = "computed_label", answ
     return trained, trained.loc[(trained["error_type"] == "False Positive") | (trained["error_type"] == "False Negative")] #df[df["error_type"].isin(("False Negative", "False Positive"))]
 
 
-def make_confusion_matrix(trained: pd.DataFrame):
+def make_confusion_matrix(trained: pd.DataFrame) -> tuple[tuple[int], tuple[int]]:
     os.chdir("/Users/NoahRipstein/PycharmProjects/Bayes email 2/visualizations")
     y_true = trained["Label"].values
     y_pred = trained["computed_label"].values.astype(int)
-    plot_confusion_matrix(y_true, y_pred, classes=["Spam", "Ham"], save=True)
+    return plot_confusion_matrix(y_true, y_pred, classes=["Spam", "Ham"], save=True)
 
 
-def plot_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_size=15, save=False) -> None:
+def plot_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_size=15, save=False) -> tuple[tuple[int], tuple[int]]:
     """Makes a labelled confusion matrix comparing predictions and ground truth labels.
 
     If classes is passed, confusion matrix will be labelled, if not, integer class values
@@ -51,9 +51,9 @@ def plot_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_s
                           text_size=10)
     """
     plt.style.use("default")
-    # Create the confustion matrix
+    # Create the confusion matrix
     cm = confusion_matrix(y_true, y_pred)
-    cm_norm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis] # normalize it
+    cm_norm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]  # normalize it
     n_classes = cm.shape[0]  # find the number of classes we're dealing with
 
     # Plot the figure and make it pretty
@@ -93,4 +93,4 @@ def plot_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_s
     if save:
         plt.savefig("confusion matrix.png", dpi=300)
     plt.show()
-
+    return cm[0], cm[1]

@@ -10,6 +10,7 @@ import colour_one_email
 import fileIO
 import accuracy_analysis
 import word_cloud
+import sensitivity_specificity
 
 # progress bar stuff
 tqdm.pandas()
@@ -238,13 +239,19 @@ if __name__ == '__main__':
     print("\n")
 
     # full, wrong_only = accuracy_analysis.error_type_row(classified)
-    accuracy_analysis.make_confusion_matrix(classified)
+    spam_result, ham_result = accuracy_analysis.make_confusion_matrix(classified)
 
+    # these 3 lines are for classifying a single email and printing it colour-coded
     ex1 = fileIO.load_to_classify()
     p_ex1 = one_posterior3(word_set=string_to_word_set(ex1), freq=word_freq)[0]
     print(colour_one_email.full_analysis_1_email(email=ex1, freq=word_freq, posterior_spam=p_ex1))
 
     # make word cloud image files
     word_cloud.ratio_cloud(word_freq)
+
+    # sensitivity and specificity mode, 95% confidence interval, generate and save plots
+    sens_mode, (sens_95hi, sens_95hi) = sensitivity_specificity.pdf_generator(spam_result[0], spam_result[1], xlab="Spam Classifier Specificity", title="Sensitivity PDF", hypotheses=500)
+    spec_mode, (spec_95hi, spec_95hi) = sensitivity_specificity.pdf_generator(ham_result[1], ham_result[0], xlab="Spam Classifier Sensitivity", title="Specificity PDF", hypotheses=500)
+
 
 
