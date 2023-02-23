@@ -7,12 +7,13 @@ $$-->
 
 # Naive Bayes Spam Email Classifier
 
-- [TLDR](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#mathematical-steps)
-- [How to Use](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#mathematical-steps)
-- [Mathematical Steps](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#mathematical-steps)
-- [Have an Email? Check if it's Spam](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#have-an-email-check-if-its-spam)
-- [Classifier Accuracy Analysis and Visualizations](https://github.com/nripstein/Bayesian-Email-Classifier/edit/main/README.md#classifier-accuracy-analysis-and-visualizations)
-- [Future Directions](https://github.com/nripstein/Bayes-email-4/edit/main/README.md#future-directions)
+- [TLDR](https://github.com/nripstein/Bayesian-Email-Classifier#tldr)
+- [Why I Started This Project](https://github.com/nripstein/Bayesian-Email-Classifier#why-i-started-this-project)
+- [How to Use](https://github.com/nripstein/Bayesian-Email-Classifier#how-to-use)
+- [Mathematical Steps](https://github.com/nripstein/Bayesian-Email-Classifier#mathematical-steps)
+- [Have an Email? Check if it's Spam](https://github.com/nripstein/Bayesian-Email-Classifier#have-an-email-check-if-its-spam)
+- [Classifier Accuracy Analysis and Visualizations](https://github.com/nripstein/Bayesian-Email-Classifier#classifier-accuracy-analysis-and-visualizations)
+- [Future Directions](https://github.com/nripstein/Bayesian-Email-Classifier#classifier-accuracy-analysis-and-visualizations)
 
 ## TLDR
 
@@ -114,7 +115,14 @@ As you can see, the probability distribution function for specificity is extreml
 
 
 ## Future Directions
-This section is incomplete
-- If an email is one long word, my algorithm doesn't really know how to treat it. I'd like to do something about that
+There are a few areas where the spam email classifier could be improved. Some of the possible areas for improvement include:
+
+1. Handling long and complex words: Currently, the model is not equipped to handle emails that contain long and complex words that it has not seen before. In future versions of the model, I plan to develop a mechanism to handle such words and improve the model's accuracy.
+
+2. Conducting more analysis on accuracy: While the model has shown promising results, it is clear that there is room for improvement in terms of accuracy. In order to figure out how to best improve the model, I hope to conduct more analysis on the accuracy.
+
+3. Determining the optimal probability threshold: The current version of the model classifies an email as spam or not spam based on a probability threshold of 0.95. In future versions of the model, I plan to conduct a more in-depth analysis to determine the optimal probability threshold that will provide the best classification results.
+
+By addressing these issues, I hope to improve the accuracy and effectiveness of the spam email classifier.
 
 ![image](https://user-images.githubusercontent.com/98430636/219830713-955e4862-a03e-414b-a746-72d83dea6699.png)
