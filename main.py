@@ -230,7 +230,7 @@ if __name__ == '__main__':
     # freq2 = train_n_rows(df2, num_rows=15000)  # 15000 will take a long time for quick demo but more => more accuracy
     # fileIO.save_freq(freq2)
 
-    test_dataset = with_word_set.tail(50)  # testing dataset. testing on 2000 seems good
+    test_dataset = with_word_set.tail(2000)  # testing dataset. testing on 2000 seems good
 
     classified = posterior_col(test_dataset, word_freq)
     # comparison = compare_score(classified)
@@ -238,8 +238,7 @@ if __name__ == '__main__':
 
     print("\n")
 
-    # full, wrong_only = accuracy_analysis.error_type_row(classified)
-    spam_result, ham_result = accuracy_analysis.make_confusion_matrix(classified)
+    confusion_matrix = accuracy_analysis.make_confusion_matrix(classified)
 
     # these 3 lines are for classifying a single email and printing it colour-coded
     ex1 = fileIO.load_to_classify()
@@ -250,8 +249,4 @@ if __name__ == '__main__':
     word_cloud.ratio_cloud(word_freq)
 
     # sensitivity and specificity mode, 95% confidence interval, generate and save plots
-    # sens_mode, (sens_95hi, sens_95hi) = sensitivity_specificity.pdf_generator(spam_result[0], spam_result[1], xlab="Spam Classifier Specificity (%)", title="Sensitivity PDF", hypotheses=500)
-    # spec_mode, (spec_95hi, spec_95hi) = sensitivity_specificity.pdf_generator(ham_result[1], ham_result[0], xlab="Spam Classifier Sensitivity (%)", title="Specificity PDF", hypotheses=500)
-
-    sensitivity_specificity.together_pdfs(spam_result[0], spam_result[1], ham_result[1], ham_result[0], save=True, hypotheses=500)
-
+    sensitivity_specificity.together_pdfs(confusion_matrix, save=True, hypotheses=500)
