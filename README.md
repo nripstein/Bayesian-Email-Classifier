@@ -100,7 +100,7 @@ To visualize the probability distribution of sensitivity and specificity, I gene
 <img src="https://user-images.githubusercontent.com/98430636/220823189-c3b80c9c-7446-4e80-869a-e4e4e4fdee02.png" alt="sens, spec" width="70%">
 
 
-As you can see, the probability distribution function for specificity is extremley tightly distributed near 100%. This indicates that the model is very good at identifying non-spam emails, with a very low false positive rate. On the other hand, the sensitivity pdf shows a wider distribution with a lower mode, indicating that the model is not as good at identifying spam emails, and the degree of certainty in the sensitivity it lower. However, the 95% confidence interval for sensitivity still shows a relatively high accuracy rate, ranging from 84.3% to 87.9%. I would ideally like to improve the model so that the lower end of the sensitivity 95% confidence interval is at least 90%.
+As you can see, the probability distribution function for sensitivity is extremley tightly distributed near 100%. This indicates that the model is very good at identifying non-spam emails, with a very low false positive rate. On the other hand, the specificity pdf shows a wider distribution with a lower mode, indicating that the model is not as good at identifying spam emails, and the degree of certainty in the sensitivity it lower. However, the 95% confidence interval for sensitivity still shows a relatively high accuracy rate, ranging from 84.3% to 87.9%. I would ideally like to improve the model so that the lower end of the sensitivity 95% confidence interval is at least 90%.
 
 ## Word Clouds
 ### Most Common Spam Words
