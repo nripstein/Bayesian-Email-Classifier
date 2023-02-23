@@ -3,13 +3,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import itertools
 from sklearn.metrics import confusion_matrix
+import os
 
 
-def error_type_row(df: pd.DataFrame, my_label: str = "computed_label", answer_label: str = "Label") -> tuple[pd.DataFrame, pd.DataFrame]:
-    # df = df.copy()
-    # print(df.columns)
-    # print(df["computed_label"])
-    # print(df[my_label])
+def error_type_row(trained: pd.DataFrame, my_label: str = "computed_label", answer_label: str = "Label") -> tuple[pd.DataFrame, pd.DataFrame]:
+
     def helper(mine, theirs):
         if theirs == mine:
             return "Correct Answer"
@@ -17,12 +15,19 @@ def error_type_row(df: pd.DataFrame, my_label: str = "computed_label", answer_la
             return "False Negative"
         else:
             return "False Positive"
-    df["error_type"] = df.apply(lambda x: helper(x[my_label], x[answer_label]), axis=1)
+    trained["error_type"] = trained.apply(lambda x: helper(x[my_label], x[answer_label]), axis=1)
 
-    return df, df.loc[(df['error_type'] == 'False Positive') | (df['error_type'] == 'False Negative')] #df[df["error_type"].isin(("False Negative", "False Positive"))]
+    return trained, trained.loc[(trained["error_type"] == "False Positive") | (trained["error_type"] == "False Negative")] #df[df["error_type"].isin(("False Negative", "False Positive"))]
 
 
-def plot_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_size=15):
+def make_confusion_matrix(trained: pd.DataFrame):
+    os.chdir("/Users/NoahRipstein/PycharmProjects/Bayes email 2/visualizations")
+    y_true = trained["Label"].values
+    y_pred = trained["computed_label"].values.astype(int)
+    plot_confusion_matrix(y_true, y_pred, classes=["Spam", "Ham"], save=True)
+
+
+def plot_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_size=15, save=False) -> None:
     """Makes a labelled confusion matrix comparing predictions and ground truth labels.
 
     If classes is passed, confusion matrix will be labelled, if not, integer class values
@@ -49,27 +54,27 @@ def plot_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_s
     # Create the confustion matrix
     cm = confusion_matrix(y_true, y_pred)
     cm_norm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis] # normalize it
-    n_classes = cm.shape[0] # find the number of classes we're dealing with
+    n_classes = cm.shape[0]  # find the number of classes we're dealing with
 
     # Plot the figure and make it pretty
     fig, ax = plt.subplots(figsize=figsize)
-    cax = ax.matshow(cm, cmap=plt.cm.Blues) # colors will represent how 'correct' a class is, darker == better
+    cax = ax.matshow(cm, cmap=plt.cm.Blues)  # colors will represent how 'correct' a class is, darker == better
     fig.colorbar(cax)
 
-  # Are there a list of classes?
-    if classes:
+    # If there are labels for the classes, add them
+    if classes is not None:
         labels = classes
     else:
         labels = np.arange(cm.shape[0])
 
     # Label the axes
     ax.set(title="Confusion Matrix",
-         xlabel="Predicted label",
-         ylabel="True label",
-         xticks=np.arange(n_classes), # create enough axis slots for each class
-         yticks=np.arange(n_classes),
-         xticklabels=labels, # axes will labeled with class names (if they exist) or ints
-         yticklabels=labels)
+           xlabel="Predicted label",
+           ylabel="True label",
+           xticks=np.arange(n_classes),  # create enough axis slots for each class
+           yticks=np.arange(n_classes),
+           xticklabels=labels,  # axes will be labeled with class names (if they exist) or ints
+           yticklabels=labels)
 
     # Make x-axis labels appear on bottom
     ax.xaxis.set_label_position("bottom")
@@ -85,5 +90,7 @@ def plot_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_s
                  color="white" if cm[i, j] > threshold else "black",
                  size=text_size)
 
+    if save:
+        plt.savefig("confusion matrix.png", dpi=300)
     plt.show()
 

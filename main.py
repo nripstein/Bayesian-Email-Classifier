@@ -1,19 +1,23 @@
+# import modules (no ML libraries)
 import pandas as pd
 import numpy as np
 import string
-from typing import Union, Callable
+from typing import Callable
+from tqdm import tqdm
 
+# my imports
+import colour_one_email
 import fileIO
 import accuracy_analysis
+import word_cloud
 
 # progress bar stuff
-from tqdm import tqdm
 tqdm.pandas()
 
 
 # todo
 # make posterior function better so it can better account for words it gets
-# test
+# test more
 
 
 def timer(func: Callable) -> Callable:
@@ -84,8 +88,6 @@ def add_to_freq_df(freq: pd.DataFrame, category: str, words: set[str], key: str 
     return freq
 
 
-
-
 @timer
 def train_n_rows(trainer: pd.DataFrame, freq: pd.DataFrame = None, num_rows: int = 10,
                  all_rows: bool = False, progress_bar: bool = True) -> pd.DataFrame:
@@ -116,47 +118,6 @@ def train_n_rows(trainer: pd.DataFrame, freq: pd.DataFrame = None, num_rows: int
             label = label_dict[row["Label"]]
             freq = add_to_freq_df(freq, category=label, words=row["word_set"])
     return freq
-
-
-def one_posterior(word_set: set[str], freq: pd.DataFrame, prior_spam: float = 0.5, thresh: float = 0.95) -> tuple[float, int]:
-    """
-    Finds the posterior probability that an email is spam
-    :param word_set: set of words in the email. from word_set column of trainer dataframe
-    :param freq: frequency of each word in each category dataframe
-    :param prior_spam: prior probability that an email is spam
-    :param thresh: if an email has greater than a thresh probability of being spam, then we classify it as span
-    :return: probability of it being spam, classification
-    """
-    # need to deal w words in word set but not freq
-
-    # laplace smoothing to deal with words with only 1
-    smoothed = freq.copy()
-    smoothed["spam"] = smoothed["spam"] + 1
-    smoothed["ham"] = smoothed["ham"] + 1
-
-    # freq w right words
-    found_words = smoothed.loc[smoothed["words"].isin(word_set)]
-
-    if found_words.empty:  # if the frequency dataset has no words in common with email, we say p(spam|D) = 0.5
-        return 0.5, int(False)
-
-    likelihood_spam_individual = found_words["spam"].to_numpy() / found_words["spam"].sum()
-    likelihood_ham_individual = found_words["ham"].to_numpy() / found_words["ham"].sum()
-
-    # likelihood_spam = np.prod(likelihood_spam_individual)
-    # likelihood_ham = np.prod(likelihood_ham_individual)
-
-    # likelihood_spam = np.exp(np.sum(np.log(likelihood_spam_individual)))
-    # likelihood_ham = np.exp(np.sum(np.log(likelihood_ham_individual)))
-
-    likelihood_ratio = np.exp(np.sum(np.log((likelihood_ham_individual / likelihood_spam_individual))))
-
-    if prior_spam == 0.5 or prior_spam is None:
-        posterior = 1 / (1 + likelihood_ratio)
-        return posterior, int(posterior > thresh)
-    else:
-        posterior = prior_spam / (prior_spam + likelihood_ratio * (1 - prior_spam))
-        return posterior, int(posterior > thresh)
 
 
 def one_posterior3(word_set: set[str], freq: pd.DataFrame, prior_spam: float = 0.5, thresh: float = 0.95) \
@@ -195,39 +156,6 @@ def one_posterior3(word_set: set[str], freq: pd.DataFrame, prior_spam: float = 0
 
     likelihood_ratio = np.exp(np.sum(np.log((likelihood_ham_individual / likelihood_spam_individual))))
     # likelihood_ratio = np.prod(likelihood_ham_individual / likelihood_spam_individual)
-    if prior_spam == 0.5 or prior_spam is None:
-        posterior = 1 / (1 + likelihood_ratio)
-        return posterior, int(posterior > thresh)
-    else:
-        posterior = prior_spam / (prior_spam + likelihood_ratio * (1 - prior_spam))
-        return posterior, int(posterior > thresh)
-
-
-def one_posterior3_optimized(word_set: set[str], freq: pd.DataFrame, prior_spam: float = 0.5, thresh: float = 0.975) \
-        -> tuple[float, int]:
-    """
-    Finds the posterior probability that an email is spam
-    :param word_set: set of words in the email. from word_set column of trainer dataframe
-    :param freq: frequency of each word in each category dataframe
-    :param prior_spam: prior probability that an email is spam
-    :param thresh: if an email has greater than a thresh probability of being spam, then we classify it as span
-    :return: probability of it being spam, classification
-    """
-    # laplace smoothing to deal with words with only 1
-    freq.loc[freq["spam"] == 0, "spam"] = 0.5
-    freq.loc[freq["ham"] == 0, "ham"] = 0.01  # if there's nothing in ham, set ham = 0.01
-
-    # freq w right words
-    found_words = freq.loc[freq["words"].isin(word_set)]
-
-    if found_words.empty:  # if the frequency dataset has no words in common with email, we say p(spam|D) = 0.5
-        return 0.5, int(False)
-
-    likelihood_spam_individual = found_words["spam"].values / found_words["spam"].sum()
-    likelihood_ham_individual = found_words["ham"].values / found_words["ham"].sum()
-
-    likelihood_ratio = likelihood_ham_individual.sum() / likelihood_spam_individual.sum()
-
     if prior_spam == 0.5 or prior_spam is None:
         posterior = 1 / (1 + likelihood_ratio)
         return posterior, int(posterior > thresh)
@@ -290,70 +218,33 @@ def add_word_set_col(full_df: pd.DataFrame, body_col_name: str = "Body") -> pd.D
 
 
 if __name__ == '__main__':
-
-    # corpus = fileIO.load_emails()
+    # corpus = fileIO.load_emails()   # if you want to start with the raw data, uncomment this and next, ten comment out the line after
     # fileIO.save_formatted_raw_emails(corpus)
     corpus = fileIO.load_emails(file_handle="formatted_corpus", file_extension="pickle", reformat=False)
+    corpus = corpus.head(28000)  # get rid of a bunch of rows to save time
 
-    corpus = corpus.head(16000)
+    with_word_set = add_word_set_col(corpus)  # add word set to each email
 
-    with_word_set = add_word_set_col(corpus)
-
-    # training_df = with_word_set.sample(frac=0.9, random_state=1)
-    # testing_df = with_word_set.drop(with_word_set.index)
-
-    word_freq = fileIO.load_freq()
-    # freq2 = train_n_rows(df2, num_rows=15000)
+    word_freq = fileIO.load_freq()  # if you want to self train, comment this and uncomment next 2 lines
+    # freq2 = train_n_rows(df2, num_rows=15000)  # 15000 will take a long time for quick demo but more => more accuracy
     # fileIO.save_freq(freq2)
 
-    tester = with_word_set.tail(20)
+    test_dataset = with_word_set.tail(2000)  # testing dataset. testing on 2000 seems good
 
-    classified = posterior_col(tester, word_freq)
+    classified = posterior_col(test_dataset, word_freq)
     # comparison = compare_score(classified)
-    print(classified["correct?"].value_counts()[True] / (
-                classified["correct?"].value_counts()[False] + classified["correct?"].value_counts()[True]))
-    # print(classified.columns)
+    print(f'Accuracy score: {(classified["correct?"].value_counts()[True] / (classified["correct?"].value_counts()[False] + classified["correct?"].value_counts()[True])) * 100}%')
 
-    full, wrong_only = accuracy_analysis.error_type_row(classified)
-    print(type(wrong_only))
+    print("\n")
 
-    # print(wrong_only.loc[:, ["error_type", "P(spam)"]])
-    # print(wrong_only.groupby("error_type").size())
+    # full, wrong_only = accuracy_analysis.error_type_row(classified)
+    accuracy_analysis.make_confusion_matrix(classified)
 
-    # print(wrong_only[wrong_only["error_type"] != "Correct Answer"])
+    ex1 = fileIO.load_to_classify()
+    p_ex1 = one_posterior3(word_set=string_to_word_set(ex1), freq=word_freq)[0]
+    print(colour_one_email.full_analysis_1_email(email=ex1, freq=word_freq, posterior_spam=p_ex1))
 
-    # import input_one_email
-    #
-    # ex1 = "Dear customer,\n\n" \
-    #      "We have a special offer just for you! Buy Viagra online now and get 50% off your first purchase. Our Viagra pills are high quality and guaranteed to work.\n" \
-    #      "Don't let ED ruin your sex life. With our Viagra, you'll be able to perform like never before. Order now and experience the benefits for yourself.\n\n" \
-    #      "Sincerely,\n\n" \
-    #      "Viagra Sales Team. $100 off!"
-    #
-    # p_ex1 = one_posterior(word_set=string_to_word_set(ex1), freq=word_freq)[0]
-    # print(input_one_email.full_analysis_1_email(email=ex1, freq=word_freq, posterior_spam=p_ex1))
-    #
-    # ex2 = "Dear valued customer,\n\n" \
-    #        "Congratulations! You've been selected to receive a special offer for a limited time only. Act now and you can get a free trial of our exclusive product.\n" \
-    #        "That's right, absolutely free! You don't want to miss out on this amazing opportunity.\n" \
-    #        "Our product is guaranteed to improve your life and make you feel like a new person. So why wait?\n" \
-    #        "Sign up now and claim your free trial today.\n\nSincerely,\nThe Free Product Team"
-    # p_ex2 = one_posterior(word_set=string_to_word_set(ex2), freq=word_freq)[0]
-    # print(input_one_email.full_analysis_1_email(email=ex2, freq=word_freq, posterior_spam=p_ex2))
-    #
-    # print("----")
-    #
-    # ex3 = "Dear Mary,\n\nI hope this email finds you well. I wanted to let you know that I've received the document you sent me and everything looks good.\n" \
-    #       "I'll review it more thoroughly and get back to you soon with any feedback I have.\n\nTake care,\nJane"
-    # p_ex3 = one_posterior(word_set=string_to_word_set(ex3), freq=word_freq)[0]
-    # print(input_one_email.full_analysis_1_email(email=ex3, freq=word_freq, posterior_spam=p_ex3))
+    # make word cloud image files
+    word_cloud.ratio_cloud(word_freq)
 
-    # end input one email stuff
-
-    # start word cloud stuff
-    # import word_cloud
-    # word_cloud.generate_wordclouds(word_freq)
-    # word_cloud.spam_ratio(word_freq)
-
-    # end word cloud stuff
 
