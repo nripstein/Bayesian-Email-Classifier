@@ -26,6 +26,8 @@ Currently, I'm also learning how to create machine learning algorithms using neu
 
 ## How to use:
 This section is incomplete
+- download the Waterloo public corpus
+- train by uncommenting the right code
 
 ## Mathematical steps:
 
