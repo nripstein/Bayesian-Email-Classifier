@@ -22,7 +22,7 @@ This program classifies emails as spam or not spam.  It uses a naïve bayes clas
 ## Why I Started This Project
 In a Bayesian statistic class, I learned about the naive Bayes classifier and its applications in text classification. I was intrigued by the algorithm's simplicity and effectiveness, so I decided to implement it from scratch in Python without using any machine learning libraries. I wanted to challenge myself to understand the underlying math and logic of the algorithm, and to gain hands-on experience in building machine learning models from scratch.
 
-Currently, I'm also learning how to create machine learning algorithms using neural networks in TensorFlow. I hope to come back to this project at some point to compare the performance of the naive Bayes classifier with a neural network classification on the same task. Overall, this project is a stepping stone for me to explore the world of machine learning and deepen my understanding of the algorithms behind it.
+Currently, I'm also learning how to create machine learning algorithms using neural networks in TensorFlow. I hope to come back to this project at some point to compare the performance of the naive Bayes classifier with a neural network classification on the same task. This project serves as a stepping stone for me to explore the world of machine learning and deepen my understanding of the algorithms behind it.
 
 ## How to use:
 This section is incomplete
@@ -69,7 +69,7 @@ The posterior probability of each email being spam is computed.  If it's determi
 ## Have an Email? Check if it's Spam
 THIS SECTION IS INCOMPLETE
 
-It is important to remember that the model was trained on a specific dataset, and as such, it may not be accurate in classifying all types of emails. The model was trained on the Waterloo Public Corpus dataset, which includes a large collection of spam and non-spam emails. It is important to note that the model is not personalized to you or any individual, and as such, its accuracy may vary depending on the email content.  For instance, the dataset labels almost all French emails as spam, so be cautious when classifying French emails. Additionally, please note that the model is for educational purposes only and should not be relied on for critical email filtering.
+It is important to remember that the model was trained on a specific dataset, and as such, it may not be accurate in classifying all types of emails. The model was trained on the Waterloo Public Corpus dataset, which includes a large collection of spam and non-spam emails. It is important to note that the model is not personalized to you or any individual, and as such, its accuracy may vary depending on the email content.  For instance, the training dataset labels almost all French emails as spam, so the words the model thinks are most likely to be spam are all in French.
 
 Examples:
 
@@ -100,18 +100,14 @@ To visualize the probability distribution of sensitivity and specificity, I gene
 <img src="https://user-images.githubusercontent.com/98430636/220823189-c3b80c9c-7446-4e80-869a-e4e4e4fdee02.png" alt="sens, spec" width="70%">
 
 
-As you can see, the probability distribution function for specificity is extremley tightly distributed near 100%. This indicates that the model is very good at identifying non-spam emails, with a very low false positive rate. On the other hand, the sensitivity pdf shows a wider distribution, indicating that the model is not as good at identifying spam emails. However, the 95% confidence interval for sensitivity still shows a relatively high accuracy rate, ranging from 84.3% to 87.9%. I would ideally like to improve the model so that the lower end of the sensitivity 95% confidence interval is at least 90%.
+As you can see, the probability distribution function for specificity is extremley tightly distributed near 100%. This indicates that the model is very good at identifying non-spam emails, with a very low false positive rate. On the other hand, the sensitivity pdf shows a wider distribution with a lower mode, indicating that the model is not as good at identifying spam emails, and the degree of certainty in the sensitivity it lower. However, the 95% confidence interval for sensitivity still shows a relatively high accuracy rate, ranging from 84.3% to 87.9%. I would ideally like to improve the model so that the lower end of the sensitivity 95% confidence interval is at least 90%.
 
-
-
-
-### Common Spam Words
+## Word Clouds
+### Most Common Spam Words
 ![spam_ratio](https://user-images.githubusercontent.com/98430636/220796954-f5bfe2d8-a98b-40f3-91ae-5c2b37af3dda.png)
 
-### Common Ham Words
+### Most Common Ham Words
 ![ham_ratio](https://user-images.githubusercontent.com/98430636/220796981-ae2880dc-37cd-4715-9413-91203022eabc.png)
-
-
 
 
 ## Future Directions
