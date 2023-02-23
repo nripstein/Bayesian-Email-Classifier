@@ -66,7 +66,11 @@ The posterior probability of each email being spam is computed.  If it's determi
 
 
 ## Have an Email? Check if it's Spam
-Paste the body of your email into 
+THIS SECTION IS INCOMPLETE
+
+It is important to remember that the model was trained on a specific dataset, and as such, it may not be accurate in classifying all types of emails. The model was trained on the Waterloo Public Corpus dataset, which includes a large collection of spam and non-spam emails. It is important to note that the model is not personalized to you or any individual, and as such, its accuracy may vary depending on the email content.  For instance, the dataset labels almost all French emails as spam, so be cautious when classifying French emails. Additionally, please note that the model is for educational purposes only and should not be relied on for critical email filtering.
+
+Examples:
 
 <img width="1193" alt="Spam Colour Email Example" src="https://user-images.githubusercontent.com/98430636/220826883-b6ffc540-60f0-4153-9acd-1a617d8426b5.png">
 
