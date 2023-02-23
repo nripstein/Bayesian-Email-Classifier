@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import os
 import scipy.stats as stats
 from fractions import Fraction
+import warnings
 
 
 # custom errors
@@ -353,4 +354,102 @@ def pdf_generator(correctly_labeled: int, mislabeled: int, xlab: str, title: str
         plt.savefig(f"{title}.png", dpi=300)
     plt.show()
     return mode, (min_95, max_95)
+
+
+def together_pdfs(correctly_labeled_spam: int, mislabeled_spam: int, correctly_labeled_ham: int, mislabeled_ham: int,
+                  hypotheses: int = 100, save: bool = True) -> tuple[tuple[float, tuple[float, float]], tuple[float, tuple[float, float]]]:
+    os.chdir("/Users/NoahRipstein/PycharmProjects/Bayes email 2/visualizations")
+    fig, ax = plt.subplots(1, 2)
+    new_tick_labels = np.linspace(0, 100, 6, dtype=int)
+
+
+    # sensitivity
+    sensitivity_df, sensitivity_obj = binomial_df(hypotheses, correctly_labeled_spam + mislabeled_spam, correctly_labeled_spam)
+
+    ax[0].bar(range(len(sensitivity_df["posterior"])), sensitivity_df["posterior"], edgecolor="black", alpha=0.8)
+    ax[0].set_xlabel("Sensitivity (%)")
+    ax[0].set_ylabel("Posterior Probability")
+
+    ax[0].set_xlim([0, 100])
+    new_tick_positions = np.linspace(0, 1, 6) * len(sensitivity_df["posterior"])
+    ax[0].set_xticks(new_tick_positions)
+    ax[0].set_xticklabels(new_tick_labels)
+    # make it go from 0 to 100 instead of to 500
+    with warnings.catch_warnings():  # set xlab for left plot. not sure why set_xticks didn't work and I needed to do something that gave error warning, but I supressed it
+        warnings.simplefilter("ignore")
+
+
+    # specificity
+    specificity_df, specificity_obj = binomial_df(hypotheses, correctly_labeled_ham + mislabeled_ham, correctly_labeled_ham)
+    ax[1].bar(range(len(specificity_df["posterior"])), specificity_df["posterior"], edgecolor="black", alpha=0.8)
+    ax[1].set_xlabel("Specificity (%)")
+
+    ax[1].set_xlim([0, 100])
+    ax[1].set_xticks(new_tick_positions)
+    ax[1].set_xticklabels(new_tick_labels)
+    with warnings.catch_warnings():  # set xlab for right plot
+        warnings.simplefilter("ignore")
+
+
+
+    plt.tight_layout()
+    fig.suptitle("Spam Classifier Sensitivity and Specificity")
+    plt.subplots_adjust(top=0.9)  # adjust the bottom margin
+    if save:
+        plt.savefig(f"Spam Classifier Sensitivity and Specificity.png", dpi=300)
+    plt.show()
+
+    sensitivity_min_95, sensitivity_max_95 = confidence(sensitivity_df)
+    sensitivity_mode: float = sensitivity_df.iloc[sensitivity_obj.mode_index()]["hypothesis"]
+
+    specificity_min_95, specificity_max_95 = confidence(specificity_df)
+    specificity_mode: float = specificity_df.iloc[specificity_obj.mode_index()]["hypothesis"]
+
+    return (specificity_mode, (specificity_min_95, specificity_max_95)), (sensitivity_mode, (sensitivity_min_95, sensitivity_max_95))
+
+
+def together_pdfs_att2(correctly_labeled_spam: int, mislabeled_spam: int, correctly_labeled_ham: int, mislabeled_ham: int,
+                  hypotheses: int = 100, save: bool = True) -> tuple[tuple[float, tuple[float, float]], tuple[float, tuple[float, float]]]:
+    os.chdir("/Users/NoahRipstein/PycharmProjects/Bayes email 2/visualizations")
+    fig, ax = plt.subplots(1, 2)
+    new_tick_labels = np.linspace(0, 100, 6, dtype=int)
+
+    # sensitivity
+    sensitivity_df, sensitivity_obj = binomial_df(hypotheses, correctly_labeled_spam + mislabeled_spam, correctly_labeled_spam)
+
+    ax[0].bar(range(len(sensitivity_df["posterior"])), sensitivity_df["posterior"], edgecolor="black", alpha=0.8)
+    ax[0].set_xlabel("Sensitivity (%)")
+    ax[0].set_ylabel("Posterior Probability")
+
+    ax[0].set_xlim([0, 100])
+    # make it go from 0 to 100 instead of to 500
+    with warnings.catch_warnings():  # set xlab for left plot. not sure why set_xticks didn't work and I needed to do something that gave error warning, but I supressed it
+        warnings.simplefilter("ignore")
+        ax[0].set_xticklabels(new_tick_labels)
+
+    # specificity
+    specificity_df, specificity_obj = binomial_df(hypotheses, correctly_labeled_ham + mislabeled_ham, correctly_labeled_ham)
+    ax[1].bar(range(len(specificity_df["posterior"])), specificity_df["posterior"], edgecolor="black", alpha=0.8)
+    ax[1].set_xlabel("Specificity (%)")
+
+
+    with warnings.catch_warnings():  # set xlab for right plot
+        warnings.simplefilter("ignore")
+        ax[1].set_xticklabels(new_tick_labels)
+        ax[1].set_xlim([0, 100])
+
+    plt.tight_layout()
+    fig.suptitle("Spam Classifier Sensitivity and Specificity")
+    plt.subplots_adjust(top=0.9)  # adjust the bottom margin
+    if save:
+        plt.savefig(f"Spam Classifier Sensitivity and Specificity.png", dpi=300)
+    plt.show()
+
+    sensitivity_min_95, sensitivity_max_95 = confidence(sensitivity_df)
+    sensitivity_mode: float = sensitivity_df.iloc[sensitivity_obj.mode_index()]["hypothesis"]
+
+    specificity_min_95, specificity_max_95 = confidence(specificity_df)
+    specificity_mode: float = specificity_df.iloc[specificity_obj.mode_index()]["hypothesis"]
+
+    return (specificity_mode, (specificity_min_95, specificity_max_95)), (sensitivity_mode, (sensitivity_min_95, sensitivity_max_95))
 
