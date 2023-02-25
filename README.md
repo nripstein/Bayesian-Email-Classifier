@@ -10,9 +10,9 @@ $$-->
 - [TLDR](https://github.com/nripstein/Bayesian-Email-Classifier#tldr)
 - [Why I Started This Project](https://github.com/nripstein/Bayesian-Email-Classifier#why-i-started-this-project)
 - [How to Use](https://github.com/nripstein/Bayesian-Email-Classifier#how-to-use)
-- [Mathematical Steps](https://github.com/nripstein/Bayesian-Email-Classifier#mathematical-steps)
 - [Have an Email? Check if it's Spam](https://github.com/nripstein/Bayesian-Email-Classifier#have-an-email-check-if-its-spam)
 - [Classifier Accuracy Analysis and Visualizations](https://github.com/nripstein/Bayesian-Email-Classifier#classifier-accuracy-analysis-and-visualizations)
+- [Mathematical Steps](https://github.com/nripstein/Bayesian-Email-Classifier#mathematical-steps)
 - [Future Directions](https://github.com/nripstein/Bayesian-Email-Classifier#classifier-accuracy-analysis-and-visualizations)
 
 ## TLDR
@@ -32,45 +32,6 @@ Currently, I'm also learning how to create machine learning algorithms using neu
 5. Run main.py to start the program.
 6. Customize use of the program according to the comments at the bottom of the main.py file.  
 Note: you will need to retrain the model, which may take some time, because the training data is stored in a csv file too large to upload to github
-
-## Mathematical steps:
-
-Preparation for training:
--	The body section of each email’s is converted to a set of words, which is added to a column called “word_set” using the string_to_word_set() function.
--	The dataset is split into a training and testing data set.
-
-Training the data:
--	A new data frame is created which contains the frequency at which each word in the training data set appears in the “spam” and “ham” category.
-
-Classifying the data:
--	The Bayesian posterior probability that an email is spam is determined according to the following (basic) procedure:
-
-### Bayesian posterior calculation
-
-Hypotheses:  
-H1: The email is spam
-H2: The email is ham
-
-Prior probabilities: P(category)  
-P(spam) and P(ham). We treat these as P(spam) = P(ham) = 0.5. In the strictest mathematical sense, P(spam) should be the overall frequency of spam emails, but I want to reduce bias, and the training dataset has much more spam than a normal email adress.
-
-Likelihood calculations: P(words|category)  
-$$P(\textrm{words}|\textrm{spam}) = \prod_{i=1}^{n} \frac{\textrm{freq of word}_i \textrm{in spam}}{\textrm{ham words}}$$
-
-$$P(\textrm{words}|\textrm{ham}) = \prod_{i=1}^{n} \frac{\textrm{freq of word}_i \textrm{in ham}}{\textrm{ham words}}$$
-
-Posteriors:
-
-$$ P(H1|D) = \frac{P(D|H1)P(H1)}{P(D|H1)P(H1) + P(D|H2)P(H2)} $$
-
-$$ P(\textrm{spam}|\textrm{words}) = \frac{P(\textrm{words}|\textrm{spam})P(\textrm{spam})}{P(\textrm{words}|\textrm{spam})P(\textrm{spam}) + P(\textrm{words}|\textrm{ham})P(\textrm{ham})} $$
-
-Deviations from standard procedure:
--	If, when doing a likelihood calculstion, a word appears in “spam” but not "ham," then it is treated as if it's been in ham 0.5 times.
--	If a word appears in "ham" but not "spam," then it is treated as if it has appeared 0.01 tines
-
-The posterior probability of each email being spam is computed.  If it's determined that there's a greater than 90% probability of the email being spam, then it is classified as spam
-
 
 ## Have an Email? Check if it's Spam
 1. Train the model first by following the instructions in the "How to Use" section.
@@ -136,6 +97,46 @@ As you can see, the probability distribution function for sensitivity is extreml
 <p align="center">
     <img src="https://user-images.githubusercontent.com/98430636/220796981-ae2880dc-37cd-4715-9413-91203022eabc.png" alt="ham ratio" width="90%">
 </p>
+
+
+## Mathematical steps:
+
+Preparation for training:
+-	The body section of each email’s is converted to a set of words, which is added to a column called “word_set” using the string_to_word_set() function.
+-	The dataset is split into a training and testing data set.
+
+Training the data:
+-	A new data frame is created which contains the frequency at which each word in the training data set appears in the “spam” and “ham” category.
+
+Classifying the data:
+-	The Bayesian posterior probability that an email is spam is determined according to the following (basic) procedure:
+
+### Bayesian posterior calculation
+
+Hypotheses:  
+H1: The email is spam
+H2: The email is ham
+
+Prior probabilities: P(category)  
+P(spam) and P(ham). We treat these as P(spam) = P(ham) = 0.5. In the strictest mathematical sense, P(spam) should be the overall frequency of spam emails, but I want to reduce bias, and the training dataset has much more spam than a normal email adress.
+
+Likelihood calculations: P(words|category)  
+$$P(\textrm{words}|\textrm{spam}) = \prod_{i=1}^{n} \frac{\textrm{freq of word}_i \textrm{in spam}}{\textrm{ham words}}$$
+
+$$P(\textrm{words}|\textrm{ham}) = \prod_{i=1}^{n} \frac{\textrm{freq of word}_i \textrm{in ham}}{\textrm{ham words}}$$
+
+Posteriors:
+
+$$ P(H1|D) = \frac{P(D|H1)P(H1)}{P(D|H1)P(H1) + P(D|H2)P(H2)} $$
+
+$$ P(\textrm{spam}|\textrm{words}) = \frac{P(\textrm{words}|\textrm{spam})P(\textrm{spam})}{P(\textrm{words}|\textrm{spam})P(\textrm{spam}) + P(\textrm{words}|\textrm{ham})P(\textrm{ham})} $$
+
+Deviations from standard procedure:
+-	If, when doing a likelihood calculstion, a word appears in “spam” but not "ham," then it is treated as if it's been in ham 0.5 times.
+-	If a word appears in "ham" but not "spam," then it is treated as if it has appeared 0.01 tines
+
+The posterior probability of each email being spam is computed.  If it's determined that there's a greater than 90% probability of the email being spam, then it is classified as spam
+
 
 
 ## Future Directions
