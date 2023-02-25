@@ -17,12 +17,12 @@ $$-->
 
 ## TLDR
 
-This program classifies emails as spam or not spam.  It uses a naïve bayes classifier algorithm, which is a machine learning algorithm.  It does not use any machine learning libraries, rather, I designed and customized the algorithm using Bayesian inference.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This program classifies emails as spam or ham.  It uses a naïve bayes classifier algorithm, which is a machine learning algorithm.  It does not use any machine learning libraries, rather, I designed and customized the algorithm using Bayesian inference.
 
 ## Why I Started This Project
-In a Bayesian statistic class, I learned about the naive Bayes classifier and its applications in text classification. I was intrigued by the algorithm's simplicity and effectiveness, so I decided to implement it from scratch in Python without using any machine learning libraries. I wanted to challenge myself to understand the underlying math and logic of the algorithm, and to gain hands-on experience in building machine learning models from scratch.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In a Bayesian statistic class, I learned about the naive Bayes classifier and its applications in text classification. I was intrigued by the algorithm's simplicity and effectiveness, so I decided to implement it from scratch in Python without using any machine learning libraries. I wanted to challenge myself to understand the underlying math and logic of the algorithm, and to gain hands-on experience in building machine learning models from scratch.
 
-Currently, I'm also learning how to create machine learning algorithms using neural networks in TensorFlow. I hope to come back to this project at some point to compare the performance of the naive Bayes classifier with a neural network classification on the same task. This project serves as a stepping stone for me to explore the world of machine learning and deepen my understanding of the algorithms behind it.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Currently, I'm also learning how to create machine learning algorithms using neural networks in TensorFlow. I hope to come back to this project at some point to compare the performance of the naive Bayes classifier with a neural network classification on the same task. This project serves as a stepping stone for me to explore the world of machine learning and deepen my understanding of the algorithms behind it.
 
 ## How to use:
 1. Download the repository and extract the files to your desired directory.
@@ -84,7 +84,7 @@ To visualize the probability distribution of sensitivity and specificity, I gene
 
 
 
-As you can see, the probability distribution function for sensitivity is extremley tightly distributed near 100%. This indicates that the model is very good at identifying non-spam emails, with a very low false positive rate. On the other hand, the specificity pdf shows a wider distribution with a lower mode, indicating that the model is not as good at identifying spam emails, and the degree of certainty in the sensitivity it lower. However, the 95% confidence interval for sensitivity still shows a relatively high accuracy rate, ranging from 84.3% to 87.9%. I would ideally like to improve the model so that the lower end of the sensitivity 95% confidence interval is at least 90%.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As you can see, the probability distribution function for sensitivity is extremley tightly distributed near 100%. This indicates that the model is very good at identifying non-spam emails, with a very low false positive rate. On the other hand, the specificity pdf shows a wider distribution with a lower mode, indicating that the model is not as good at identifying spam emails, and the degree of certainty in the sensitivity it lower. However, the 95% confidence interval for sensitivity still shows a relatively high accuracy rate, ranging from 84.3% to 87.9%. I would ideally like to improve the model so that the lower end of the sensitivity 95% confidence interval is at least 90%.
 
 ## Word Clouds
 ### Most Common Spam Words
