@@ -29,6 +29,14 @@ This section is incomplete
 - download the Waterloo public corpus
 - train by uncommenting the right code
 
+
+1. Download the repository and extract the files to your desired directory.
+2. [Download the Waterloo Public Corpus Dataset from Kaggle](https://www.kaggle.com/datasets/imdeepmind/preprocessed-trec-2007-public-corpus-dataset.)
+3. Create a folder called "data" in the root directory of the repository.
+4. Move the downloaded dataset file into the "data" folder.
+5. Run main.py to start the program.
+6. Customize use of the program according to the comments at the bottom of the main.py file.
+
 ## Mathematical steps:
 
 Preparation for training:
