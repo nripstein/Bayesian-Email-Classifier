@@ -127,10 +127,15 @@ As you can see, the probability distribution function for sensitivity is extreml
 
 ## Word Clouds
 ### Most Common Spam Words
-![spam_ratio](https://user-images.githubusercontent.com/98430636/220796954-f5bfe2d8-a98b-40f3-91ae-5c2b37af3dda.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/98430636/220796954-f5bfe2d8-a98b-40f3-91ae-5c2b37af3dda.png" alt="spam ratio" width="90%">
+</p>
+
 
 ### Most Common Ham Words
-![ham_ratio](https://user-images.githubusercontent.com/98430636/220796981-ae2880dc-37cd-4715-9413-91203022eabc.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/98430636/220796981-ae2880dc-37cd-4715-9413-91203022eabc.png" alt="ham ratio" width="90%">
+</p>
 
 
 ## Future Directions
