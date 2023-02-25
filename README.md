@@ -25,11 +25,6 @@ In a Bayesian statistic class, I learned about the naive Bayes classifier and it
 Currently, I'm also learning how to create machine learning algorithms using neural networks in TensorFlow. I hope to come back to this project at some point to compare the performance of the naive Bayes classifier with a neural network classification on the same task. This project serves as a stepping stone for me to explore the world of machine learning and deepen my understanding of the algorithms behind it.
 
 ## How to use:
-This section is incomplete
-- download the Waterloo public corpus
-- train by uncommenting the right code
-
-
 1. Download the repository and extract the files to your desired directory.
 2. [Download the Waterloo Public Corpus Dataset from Kaggle](https://www.kaggle.com/datasets/imdeepmind/preprocessed-trec-2007-public-corpus-dataset.)
 3. Create a folder called "data" in the root directory of the repository.
