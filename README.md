@@ -42,7 +42,7 @@ Note: you will need to retrain the model, which may take some time, because the 
 
 The console will output the posterior probability of the email being spam, and will output the email with words colour coded according to their probability of coming from a spam email.  Examples below.
 
-It is important to remember that the model was trained on a specific dataset, and as such, it may not be accurate in classifying all types of emails. The model was trained on the Waterloo Public Corpus dataset, which includes a large collection of spam and non-spam emails. It is important to note that the model is not personalized to you or any individual, and as such, its accuracy may vary depending on the email content.  For instance, the training dataset labels almost all French emails as spam, so the words the model thinks are most likely to be spam are all in French.
+It is important to remember that the model was trained on a specific dataset, and as such, it may not be accurate in classifying all types of emails. The model was trained on the Waterloo Public Corpus dataset, which includes a large collection of emails from different sources. It is important to note that the model is not personalized to you or any individual, and as such, its accuracy may vary depending on the email content.  For instance, the training dataset labels almost all French emails as spam, so the words the model thinks are most likely to be spam are all in French.
 
 Examples:
 
