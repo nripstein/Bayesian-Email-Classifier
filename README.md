@@ -7,6 +7,16 @@ $$-->
 
 # Naive Bayes Spam Email Classifier
 
+<div align="center">
+    <img src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white" />
+    <img src="https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white" />
+    <img src="https://img.shields.io/badge/Matplotlib-%23ffffff.svg?style=for-the-badge&logo=Matplotlib&logoColor=black" />
+</div>
+<br>
+
+
+
+
 - [TLDR](https://github.com/nripstein/Bayesian-Email-Classifier#tldr)
 - [Why I Started This Project](https://github.com/nripstein/Bayesian-Email-Classifier#why-i-started-this-project)
 - [How to Use](https://github.com/nripstein/Bayesian-Email-Classifier#how-to-use)
