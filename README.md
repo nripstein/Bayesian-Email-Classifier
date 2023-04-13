@@ -152,7 +152,7 @@ The posterior probability of each email being spam is computed.  If it's determi
 ## Future Directions
 There are a few areas where the spam email classifier could be improved. Some of the possible areas for improvement include:
 
-1. Handling long and complex words: Currently, the model is not equipped to handle emails that contain long and complex words that it has not seen before. In future versions of the model, I plan to develop a mechanism to handle such words and improve the model's accuracy.
+1. Handling spam emails made up of one long word: Currently, the model is not equipped to handle spam emails that contain a single long word that it has not seen before. In future versions of the model, I plan to develop a mechanism to handle such words and improve the model's accuracy.
 
 2. Conducting more analysis on accuracy: While the model has shown promising results, it is clear that there is room for improvement in terms of accuracy. In order to figure out how to best improve the model, I hope to conduct more analysis on the accuracy.
 
