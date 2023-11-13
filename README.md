@@ -108,7 +108,7 @@ To visualize the probability distribution of sensitivity and specificity, I gene
     <img src="https://user-images.githubusercontent.com/98430636/220796981-ae2880dc-37cd-4715-9413-91203022eabc.png" alt="ham ratio" width="90%">
 </p>
 
-
+There are lots of French words which are common in the spam corpus, but very rare in the ham corpus.  This indicates that French emails are very likely spam in the training set.
 ## Mathematical steps:
 
 Preparation for training:
@@ -160,4 +160,4 @@ There are a few areas where the spam email classifier could be improved. Some of
 
 By addressing these issues, I hope to improve the accuracy and effectiveness of the spam email classifier.
 
-![image](https://user-images.githubusercontent.com/98430636/219830713-955e4862-a03e-414b-a746-72d83dea6699.png)
+
